@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title><%= poll.title %></title>
+		
+		<link href="/public/css/clementine.css" rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+	
+	<%- include header.ejs %>
+
+	<body>
+		<div class="jumbotron" id="show-poll">
+		    <div class="row">
+              <div class="col-md-6">
+                  <form action="/polls/<%= poll.id %>" method="post">
+    			    <h2 id="poll-title"><%= poll.title %></h2>
+    			    <% poll.options.forEach(function(option) { %>
+                        <input type="radio" name="option" value="<%= option.text %>">
+                        <span class="text-option"><%= option.text %></span><br>
+                    <% }) %>
+                    <% if (user) { %>
+                        <input type="radio" name="option" id="custom-radio" value="">
+                        <span class="text-option">I'd like a custom option...</span></br>
+                        <input type="text" name="option-text" id="custom-text">
+                    <% } %>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+              </div>
+              <div class="col-md-6" id="graph">
+                  <canvas id="myDoughnutChart" width="400" height="400" 
+            		      chart-data="<%= poll.options.map(function(option) { return option.votes }) %>" 
+            		      chart-labels="<%= poll.options.map(function(option) { return option.text }) %>">
+            	  </canvas>
+            	  <% if (user != null && poll.user.toString() === user) { %>
+                    <form action="/delete/<%= poll.id %>" method="post">
+                        <button class="btn btn-danger">Remove this Poll</button>
+                    </form>
+                <% } %>
+              </div>
+            </div>
+		</div>
+		
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
+		
+		<script>
+		    $("input:radio:first").attr('checked', true);
+		    $("#custom-text").hide();
+		    
+            $( document ).ready(function() {
+                $('input:radio').change(function() {
+                    if ($('#custom-radio').is(":checked")) {
+        		        $("#custom-text").show();
+        		    } else {
+        		        $("#custom-text").hide();
+        		    }
+                });
+                
+                $('#custom-text').change(function() {
+                    var customVal = $('#custom-text').val();
+                    $('#custom-radio').val(customVal);
+                })
+                
+                var ctx = $("#myDoughnutChart");
+                
+                var optionVotes = ctx.get(0).getAttribute("chart-data").split(",").map(function(item) {
+                                      return parseInt(item, 10);
+                                  });
+                var optionLabels = ctx.get(0).getAttribute("chart-labels").split(",");
+                
+                var myDoughnutChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: optionLabels,
+                datasets: [
+                    {
+                        data: optionVotes,
+                        backgroundColor: [
+                            "rgba(247,70,74,0.6)",
+                            "rgba(70,191,189,0.6)",
+                            "rgba(253,180,92,0.6)",
+                            "rgba(151,187,205,0.6)",
+                            "rgba(220,220,220,0.6)",
+                            "rgba(148,159,177,0.6)",
+                            "rgba(77,83,96,0.6)"
+                        ]
+                    }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        animationEasing: "easeOutQuart",
+                        animationSteps: 40
+                    }
+                });
+            });
+		</script>
+	</body>
+</html>
