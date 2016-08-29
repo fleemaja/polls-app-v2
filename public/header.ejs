@@ -10,13 +10,11 @@
 		    <li><a class="menu" href="/logout">Logout</a></li>
 		  <% } else { %>
               <li id="github-login">
-                <a href="/auth/github">
-    				<div class="btn" id="login-btn">
-    					<img src="/public/img/github_32px.png" alt="github logo" />
-    					<p>LOGIN WITH GITHUB</p>
-    				</div>
-    			</a>
-    		  </li>
+                <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Login</a>
+    		      </li>
+    		      <li id="github-login">
+    		        <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Signup</a>
+    		      </li>
     	  <% } %>
         </ul>
     </nav>

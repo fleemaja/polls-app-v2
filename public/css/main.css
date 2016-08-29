@@ -15,6 +15,11 @@ li:not(.poll-items):not(#github-login) {
 	margin-top: 10px;
 }
 
+#github-login {
+    margin-right: 20px;
+	margin-top: 5px;
+}
+
 ul {
 	margin-top: 50px;
 }

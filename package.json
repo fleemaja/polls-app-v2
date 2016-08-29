@@ -20,18 +20,23 @@
   },
   "author": "",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "chart.js": "^2.2.0-rc.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^1.2.0",
     "ejs": "^2.4.2",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
     "jquery": "^3.1.0",
     "lodash": "^4.13.1",
+    "method-override": "^2.3.6",
     "mongoose": "^4.1.0",
     "mongoose-relationship": "^0.1.5",
+    "morgan": "^1.7.0",
     "passport": "^0.3.0",
-    "passport-github": "^1.0.0",
+    "passport-local": "^1.0.0",
     "sanitize-html": "^1.13.0"
   }
 }

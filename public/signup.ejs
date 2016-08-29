@@ -1,0 +1,53 @@
+<html>
+    
+    <head>
+    	<title>Signup</title>
+    	
+    	<link href="/public/css/clementine.css" rel="stylesheet" type="text/css">
+    	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    	<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+    	      <a class="navbar-brand" href="/">Polls</a>
+    	    </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+    
+    <div class="col-sm-6 col-sm-offset-3">
+    
+        <h1><span class="fa fa-sign-in"></span> Signup</h1>
+    
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+    
+        <!-- LOGIN FORM -->
+        <form action="/signup" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+    
+            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+        </form>
+    
+        <hr>
+    
+        <p>Already have an account? <a href="/login">Login</a></p>
+        <p>Or go <a href="/">home</a>.</p>
+    
+    </div>
+    
+    </div>
+</html>
