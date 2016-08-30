@@ -5,7 +5,6 @@
 	<head>
 		<title>All Polls</title>
 		
-		<link href="/public/css/clementine.css" rel="stylesheet" type="text/css">
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
@@ -14,15 +13,23 @@
    <%- include header.ejs %>
 
 	<body>
-		<div class="jumbotron">
-			<h1>All Polls</h1>
-			<h3>Select a poll to see the results and vote</h3>
-			<ul>
-				<% polls.forEach(function(poll) { %>
-					<li class="poll-items"><a href="/polls/<%= poll.id %>"><%= poll.title %></a></li>
-				<% }) %>
-			</ul>
+		<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 350, "isFitWidth": true, "gutter": 20 }'>
+			<% polls.forEach(function(poll) { %>
+			    <div class="grid-item">
+					<h3><a href="/polls/<%= poll.id %>"><%= poll.title %></a></h3>
+					<% var totalVotes = 0; %>
+					<% poll.options.forEach(function(option) { %>
+                        <input type="radio" name="option" class="regular-radio big-radio" value="<%= option.text %>">
+                        <span class="text-option"><%= option.text %></span><br>
+                        <% totalVotes += option.votes %>
+                    <% }) %>
+					<button class="btn btn-secondary">Vote</button>
+					<span class="total-votes"><%= totalVotes + " votes" %></span>
+				</div>
+			<% }) %>
 		</div>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
 	</body>
 
 </html>
