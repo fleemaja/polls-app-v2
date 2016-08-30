@@ -40,7 +40,7 @@ exports.show = function(req, res) {
 
 // Creates a new poll in the DB.
 exports.create = function(req, res) {
-  var options = req.body.options.split("\r\n");
+  var options = req.body.options.split("\r\n").filter(function(o) { return o != '' });
   var options = options.map(function(op) { return op.slice(0, 50) });
   var options = options.getUnique();
   var parsedPoll = req.body;
@@ -104,7 +104,7 @@ exports.destroy = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!poll) { return res.status(404).send('Not Found'); }
 
-    // Only owners and admins may delete
+    // Only owners may delete
     if(poll.user.toString() === req.user._id.toString()) {
       poll.remove(function(err) {
         if(err) { return handleError(res, err); }

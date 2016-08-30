@@ -3,7 +3,7 @@
 <html>
 
 	<head>
-		<title><%= poll.title %></title>
+		<title><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></title>
 		
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -17,23 +17,18 @@
 		    <div class="row">
               <div class="col-md-6">
                   <form action="/polls/<%= poll.id %>" method="post">
-    			    <h2 id="poll-title"><%= poll.title %></h2>
+    			    <h2 id="poll-title"><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></h2>
     			    <% poll.options.forEach(function(option) { %>
                         <input type="radio" name="option" value="<%= option.text %>">
-                        <span class="text-option"><%= option.text %></span><br>
+                        <span class="text-option"><%= option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></span><br>
                     <% }) %>
-                    <% if (user) { %>
-                        <input type="radio" name="option" id="custom-radio" value="">
-                        <span class="text-option">I'd like a custom option...</span></br>
-                        <input type="text" name="option-text" id="custom-text">
-                    <% } %>
-                    <input class="btn btn-primary" type="submit" value="Submit">
+                    <input class="btn btn-primary" type="submit" value="Vote">
                 </form>
               </div>
               <div class="col-md-6" id="graph">
                   <canvas id="myDoughnutChart" width="400" height="400" 
             		      chart-data="<%= poll.options.map(function(option) { return option.votes }) %>" 
-            		      chart-labels="<%= poll.options.map(function(option) { return option.text }) %>">
+            		      chart-labels="<%= poll.options.map(function(option) { return option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') }) %>">
             	  </canvas>
             	  <% if (user != null && poll.user.toString() === user) { %>
                     <form action="/delete/<%= poll.id %>" method="post">
@@ -49,21 +44,8 @@
 		
 		<script>
 		    $("input:radio:first").attr('checked', true);
-		    $("#custom-text").hide();
 		    
             $( document ).ready(function() {
-                $('input:radio').change(function() {
-                    if ($('#custom-radio').is(":checked")) {
-        		        $("#custom-text").show();
-        		    } else {
-        		        $("#custom-text").hide();
-        		    }
-                });
-                
-                $('#custom-text').change(function() {
-                    var customVal = $('#custom-text').val();
-                    $('#custom-radio').val(customVal);
-                })
                 
                 var ctx = $("#myDoughnutChart");
                 

@@ -147,6 +147,11 @@ input[type="submit"] {
     display:inline-block;
 }
 
+.alert-category,
+.alert-options {
+    display: none;
+}
+
 @media (max-width: 800px) {
     .navbar-header {
         float: left;
