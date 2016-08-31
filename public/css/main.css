@@ -21,7 +21,8 @@ input[type="checkbox"] {
     padding: 8px !important;
 }
 
-.fa-signal {
+.fa-signal,
+.fa-user {
     color: #f0ad4e;
 }
 

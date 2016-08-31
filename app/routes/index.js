@@ -18,6 +18,11 @@ module.exports = function (app, passport) {
 		    pollController.index(req, res);
 		});
 		
+   app.route('/api')
+        .get(function(req, res) {
+        	pollController.apiPolls(req, res);
+        });
+		
     app.route('/signup')
       .get(function(req, res) {
       	res.render(path + '/public/signup.ejs', { message: req.flash('signupMessage') });

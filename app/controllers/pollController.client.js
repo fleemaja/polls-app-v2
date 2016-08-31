@@ -2,28 +2,49 @@ var _ = require('lodash');
 var Poll = require('../models/polls.js');
 var path = process.cwd();
 
-// Get list of polls
+// Get index page (polls are fetched through the api endpoint)
 exports.index = function(req, res) {
-  Poll.find(function (err, polls) {
-    if(err) { return handleError(res, err); }
-    var voteSorted = polls.concat().sort(function(p1, p2) {
-      var p1Votes = 0;
-      p1.options.forEach(function(o) {
-        p1Votes += o.votes;
-      });
-      var p2Votes = 0;
-      p2.options.forEach(function(o) {
-        p2Votes += o.votes;
-      });
-      return p2Votes - p1Votes;
-    });
-    var showObj = { polls: voteSorted, user: null };
+    var showObj = { user: null };
     if (req.user) {
       showObj['user'] = req.user._id.toString()
 		}
     return res.render(path + '/public/index.ejs', showObj);
-  });
 };
+
+exports.apiPolls = function(req, res) {
+  var category = req.query.category;
+  var sortType = req.query.sortType;
+  
+  Poll.find(function(err, polls) {
+    if(err) { return handleError(res, err); }
+    var filteredPolls = polls.concat();
+    if (category !== "all") {
+      filteredPolls = filteredPolls.filter(function(poll) {
+        if (poll.category === category) {
+          return poll;
+        }
+      });
+    }
+    var sortedPolls;
+    if (sortType === "most") {
+      sortedPolls = filteredPolls.concat().sort(function(p1, p2) {
+        var p1Votes = 0;
+        p1.options.forEach(function(o) {
+          p1Votes += o.votes;
+        });
+        var p2Votes = 0;
+        p2.options.forEach(function(o) {
+          p2Votes += o.votes;
+        });
+        return p2Votes - p1Votes;
+      });
+    } else if (sortType === "newest") {
+      sortedPolls = filteredPolls.concat().reverse();
+    }
+    
+    return res.status(200).json(sortedPolls);
+  });
+}
 
 // Get list of polls
 exports.userPolls = function(req, res) {

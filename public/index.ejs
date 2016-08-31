@@ -36,28 +36,76 @@
 	        </div>
 		</div>
 		
-		<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 350, "isFitWidth": true, "gutter": 20 }'>
-			<% polls.forEach(function(poll) { %>
-			    <div class="grid-item">
-					<h3><a href="/polls/<%= poll.id %>"><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></a></h3>
-					<% var totalVotes = 0; %>
-					<form action="/polls/<%= poll.id %>" method="post">
-						<% poll.options.forEach(function(option) { %>
-	                        <input type="radio" name="option" class="regular-radio big-radio" value="<%= option.text %>">
-	                        <span class="text-option"><%= option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></span><br>
-	                        <% totalVotes += option.votes %>
-	                    <% }) %>
-						<input class="btn btn-secondary" type="submit" value="Vote">
-						<span class="total-votes"><%= totalVotes + " votes" %></span>
-					    <span class="total-votes"><%= "Category: " + poll.category %></span>
-					</form>
-				</div>
-			<% }) %>
-		</div>
-		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
+		<div class="grid">
+	    </div>
 		
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
+		
+		<script>
+			
+			$('document').ready(function() {
+				getPolls();
+			});
+			
+			$('.grid').on('click', 'input[type="radio"]', function() {
+			    var parentID = $(this).parent().attr('id');
+			    $("#" + parentID + ' input[type="submit"]').prop('disabled', false);
+			});
+			
+			$('#select-sort').on('change', function() {
+				getPolls();
+			});
+			
+			$('#select-category').on('change', function() {
+				getPolls();
+			});
+			
+			function getPolls() {
+				var category = $('#select-category').val();
+			    var sortType = $('#select-sort').val();
+			    
+				$.ajax({
+		    	  	url: "https://polls-app-v2-fleemaja.c9users.io/api",
+		    	  	dataType: 'json',
+				    data: { 
+				        "category": category,
+				        "sortType": sortType
+				    },
+				    success: function(json) {
+				    	// var html = "<div class='grid' data-masonry='{ \'itemSelector\': \'.grid-item\', \'columnWidth\': 350, \'isFitWidth\': true, \'gutter\': 20 }'>";
+				    	html = "";
+				    	json.forEach(function(poll) {
+				    		var pollTitle = poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+				    		html += "<div class='grid-item'>";
+				    		html += "<h3><a href='/polls/" + poll._id + "' >" + pollTitle + "</a></h3>";
+				    		html += "<form action='/polls/" + poll._id + "' method='post' id=" + poll._id + ">";
+				    		var totalVotes = 0;
+				    		poll.options.forEach(function(o) {
+				    			var optionText = o.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+				    			html += "<input type='radio' name='option' class='regular-radio big-radio' value='" + optionText + "'>";
+				    			html += "<span class='text-option'>" + optionText + "</span><br>";
+				    			totalVotes += o.votes;
+				    		});
+				    		html += "<input class='btn btn-secondary' type='submit' value='Vote'>";
+				    		html += "<span class='total-votes'>" + totalVotes + " votes</span>";
+				    		html += "<span class='total-votes'>Category: " + poll.category + "</span>";
+				    		html += "</form></div>";
+				    	});
+				    	$('.grid').html(html);
+				    	
+				    	$('input[type="submit"]').prop("disabled", true);
+				    	
+				    	var msnry = new Masonry( '.grid', {
+						  columnWidth: 350,
+						  isFitWidth: true, 
+						  gutter: 20,
+						  itemSelector: '.grid-item'
+						});
+				    }
+				});
+			}
+		</script>
 		
 	</body>
 
