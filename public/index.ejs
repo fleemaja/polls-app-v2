@@ -13,24 +13,52 @@
    <%- include header.ejs %>
 
 	<body>
+		
+		<div class="filters">
+			<div class="grid-sort">
+	          <select class="form-control" id="select-sort">
+	            <option selected value="most">Most votes</option>
+	            <option value="newest">Newest first</option>
+	          </select>
+	        </div>
+	        
+	        <div class="grid-category">
+	          <select class="form-control" id="select-category">
+	            <option selected value="all">All categories</option>
+	            <option value="sports">Sports &amp; Fitness</option>
+                <option value="movies">TV &amp; Movies</option>
+                <option value="music">Music &amp; Art</option>
+                <option value="food">Food &amp; Travel</option>
+                <option value="science">Science &amp; Technology</option>
+                <option value="news">News &amp; Politics</option>
+                <option value="misc">Miscellaneous</option>
+	          </select>
+	        </div>
+		</div>
+		
 		<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 350, "isFitWidth": true, "gutter": 20 }'>
 			<% polls.forEach(function(poll) { %>
 			    <div class="grid-item">
 					<h3><a href="/polls/<%= poll.id %>"><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></a></h3>
 					<% var totalVotes = 0; %>
-					<% poll.options.forEach(function(option) { %>
-                        <input type="radio" name="option" class="regular-radio big-radio" value="<%= option.text %>">
-                        <span class="text-option"><%= option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></span><br>
-                        <% totalVotes += option.votes %>
-                    <% }) %>
-					<button class="btn btn-secondary">Vote</button>
-					<span class="total-votes"><%= totalVotes + " votes" %></span>
-					<span class="total-votes"><%= "Category: " + poll.category %></span>
+					<form action="/polls/<%= poll.id %>" method="post">
+						<% poll.options.forEach(function(option) { %>
+	                        <input type="radio" name="option" class="regular-radio big-radio" value="<%= option.text %>">
+	                        <span class="text-option"><%= option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></span><br>
+	                        <% totalVotes += option.votes %>
+	                    <% }) %>
+						<input class="btn btn-secondary" type="submit" value="Vote">
+						<span class="total-votes"><%= totalVotes + " votes" %></span>
+					    <span class="total-votes"><%= "Category: " + poll.category %></span>
+					</form>
 				</div>
 			<% }) %>
 		</div>
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
+		
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		
 	</body>
 
 </html>

@@ -6,7 +6,18 @@ var path = process.cwd();
 exports.index = function(req, res) {
   Poll.find(function (err, polls) {
     if(err) { return handleError(res, err); }
-    var showObj = { polls: polls, user: null };
+    var voteSorted = polls.concat().sort(function(p1, p2) {
+      var p1Votes = 0;
+      p1.options.forEach(function(o) {
+        p1Votes += o.votes;
+      });
+      var p2Votes = 0;
+      p2.options.forEach(function(o) {
+        p2Votes += o.votes;
+      });
+      return p2Votes - p1Votes;
+    });
+    var showObj = { polls: voteSorted, user: null };
     if (req.user) {
       showObj['user'] = req.user._id.toString()
 		}
@@ -18,8 +29,19 @@ exports.index = function(req, res) {
 exports.userPolls = function(req, res) {
   Poll.find({ user: req.user._id }, function (err, polls) {
     if(err) { return handleError(res, err); }
+    var voteSorted = polls.concat().sort(function(p1, p2) {
+      var p1Votes = 0;
+      p1.options.forEach(function(o) {
+        p1Votes += o.votes;
+      });
+      var p2Votes = 0;
+      p2.options.forEach(function(o) {
+        p2Votes += o.votes;
+      });
+      return p2Votes - p1Votes;
+    });
     return res.render(path + '/public/mypolls.ejs', {
-				polls: polls,
+				polls: voteSorted,
 				user: req.user._id.toString()
 		});
   });
@@ -93,7 +115,7 @@ exports.vote = function(req, res) {
       if (req.user) {
         showObj['user'] = req.user._id.toString()
   		}
-      return res.render(path + '/public/show.ejs', showObj);
+      return res.redirect(req.get('referer'));
     });
   });
 };

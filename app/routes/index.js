@@ -48,11 +48,6 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			pollController.userPolls(req, res);
 		});
-
-	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
-		});
 		
     app.route('/newpoll')
 		.get(isLoggedIn, function (req, res) {
