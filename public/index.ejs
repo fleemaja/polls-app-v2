@@ -14,10 +14,26 @@
 
 	<body>
 		
+	   <div id="myModal" class="modal">
+	      <div class="modal-content">
+	      	<div class="modal-header">
+	      		<button type="button" class="close" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		        <span>Sign up for Poll Vault</span>
+	      	</div>
+	      	<h1><span class="fa fa-signal"></span></h1>
+	      	<h3>Log in to create and vote on polls</h3>
+	        <a href="/signup"><button class="btn">Sign Up</button></a>
+	        <p>Have an account? <a href="/login">Log in >></a></p>
+	      </div>
+	
+	    </div>
+		
 		<div class="filters">
 			<div class="grid-sort">
 	          <select class="form-control" id="select-sort">
-	            <option selected value="most">Most votes</option>
+	            <option selected value="most">Most votes first</option>
 	            <option value="newest">Newest first</option>
 	          </select>
 	        </div>
@@ -43,14 +59,47 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
 		
 		<script>
+		
+		    var modal = $('#myModal');
 			
 			$('document').ready(function() {
 				getPolls();
 			});
 			
+			$('.close').on('click', function() {
+				modal.hide();
+			});
+			
 			$('.grid').on('click', 'input[type="radio"]', function() {
 			    var parentID = $(this).parent().attr('id');
 			    $("#" + parentID + ' input[type="submit"]').prop('disabled', false);
+			});
+			
+			$('.grid').on('click', 'input[type="submit"]', function(e) {
+			    e.preventDefault();
+			    
+			    var formID = $(e.currentTarget).parent().attr('id');
+			    
+			    var selectedOption = $('input[name=option]:checked', "#" + formID).val();
+			    
+			    $.ajax({
+			    	url: "https://polls-app-v2-fleemaja.c9users.io/polls/" + formID,
+			    	type: 'post',
+			    	data: {
+			    		option: selectedOption
+			    	},
+			    	success: function(json) {
+			    		if (json.hasOwnProperty('message')) {
+			    			if (json['message'] === "Login to vote") {
+			    				modal.show();
+			    			} else {
+			    				alert(json['message']);
+			    			}
+			    		} else {
+			    			alert("You voted!");
+			    		}
+			    	}
+			    })
 			});
 			
 			$('#select-sort').on('change', function() {
@@ -73,7 +122,6 @@
 				        "sortType": sortType
 				    },
 				    success: function(json) {
-				    	// var html = "<div class='grid' data-masonry='{ \'itemSelector\': \'.grid-item\', \'columnWidth\': 350, \'isFitWidth\': true, \'gutter\': 20 }'>";
 				    	html = "";
 				    	json.forEach(function(poll) {
 				    		var pollTitle = poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
@@ -81,7 +129,7 @@
 				    		html += "<h3><a href='/polls/" + poll._id + "' >" + pollTitle + "</a></h3>";
 				    		html += "<form action='/polls/" + poll._id + "' method='post' id=" + poll._id + ">";
 				    		var totalVotes = 0;
-				    		poll.options.forEach(function(o) {
+			    			poll.options.forEach(function(o) {
 				    			var optionText = o.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 				    			html += "<input type='radio' name='option' class='regular-radio big-radio' value='" + optionText + "'>";
 				    			html += "<span class='text-option'>" + optionText + "</span><br>";

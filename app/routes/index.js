@@ -75,7 +75,7 @@ module.exports = function (app, passport) {
 	   })
 	   .post(function(req, res) {
 	   	   pollController.vote(req, res);
-	  });
+	   });
 	  
     app.route('/delete/:id')
        .post(isLoggedIn, function(req, res) {

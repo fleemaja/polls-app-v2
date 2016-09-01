@@ -110,33 +110,42 @@ exports.create = function(req, res) {
 exports.vote = function(req, res) {
   var choice = req.body.option.slice(0, 50);
   
+  var user = null;
+  if (req.user) {
+    user = req.user._id.toString();
+  }
+  
   if(req.body._id) { delete req.body._id; }
   Poll.findById(req.params.id, function (err, poll) {
     if (err) { return handleError(res, err); }
     if(!poll) { return res.status(404).send('Not Found'); }
     var updated = _.extend(poll, req.body);
-    
-    var newOption = true;
-    updated.options.forEach(function(option) {
-      if (option.text === choice) {
-        option.votes += 1;
-        newOption = false;
-      }
+    var voters = [];
+    poll.voters.forEach(function(vote) {
+      voters.push(vote[0]);
     });
-    if (newOption && choice != "") {
-      updated.options.push({
-        text: choice,
-        votes: 1
-      })
+    if (user) {
+      var userNotVoted = voters.indexOf(user) === -1;
+    }
+    
+    var messageJSON;
+    if (user && userNotVoted) {
+      updated.options.forEach(function(option) {
+        if (option.text === choice) {
+          option.votes += 1;
+          poll.voters.push([user, choice]);
+          messageJSON = poll;
+        }
+      });
+    } else if (user && !userNotVoted) {
+      messageJSON = { 'message': "You have already voted" };
+    } else {
+      messageJSON = { 'message': "Login to vote" };
     }
 
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      var showObj = { poll: poll, user: null };
-      if (req.user) {
-        showObj['user'] = req.user._id.toString()
-  		}
-      return res.redirect(req.get('referer'));
+      return res.status(200).json(messageJSON);
     });
   });
 };
