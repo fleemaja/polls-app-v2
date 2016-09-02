@@ -17,10 +17,10 @@
 		    <div class="row">
               <div class="col-md-6">
                   <form action="/polls/<%= poll.id %>" method="post">
-    			    <h2 id="poll-title"><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></h2>
+    			    <h2 id="poll-title"><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g, '"') %></h2>
     			    <% poll.options.forEach(function(option) { %>
                         <input type="radio" name="option" value="<%= option.text %>">
-                        <span class="text-option"><%= option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></span><br>
+                        <span class="text-option"><%= option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g, '"') %></span><br>
                     <% }) %>
                     <input class="btn btn-primary" type="submit" value="Vote">
                 </form>
@@ -28,7 +28,7 @@
               <div class="col-md-6" id="graph">
                   <canvas id="myDoughnutChart" width="400" height="400" 
             		      chart-data="<%= poll.options.map(function(option) { return option.votes }) %>" 
-            		      chart-labels="<%= poll.options.map(function(option) { return option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') }) %>">
+            		      chart-labels="<%= poll.options.map(function(option) { return option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g, '"') }) %>">
             	  </canvas>
             	  <% if (user != null && poll.user.toString() === user) { %>
                     <form action="/delete/<%= poll.id %>" method="post">

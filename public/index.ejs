@@ -124,14 +124,14 @@
 				    success: function(json) {
 				    	html = "";
 				    	json.forEach(function(poll) {
-				    		var pollTitle = poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+				    		var pollTitle = $('<textarea />').html(poll.title).text();
 				    		html += "<div class='grid-item'>";
 				    		html += "<h3><a href='/polls/" + poll._id + "' >" + pollTitle + "</a></h3>";
 				    		html += "<form action='/polls/" + poll._id + "' method='post' id=" + poll._id + ">";
 				    		var totalVotes = 0;
 			    			poll.options.forEach(function(o) {
-				    			var optionText = o.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-				    			html += "<input type='radio' name='option' class='regular-radio big-radio' value='" + optionText + "'>";
+			    				var optionText = $('<textarea />').html(o.text).text();
+				    			html += "<input type='radio' name='option' class='regular-radio big-radio' value='" + optionText.replace(/\"/g, '&#34;').replace(/\'/g, '&#39;') + "' >";
 				    			html += "<span class='text-option'>" + optionText + "</span><br>";
 				    			totalVotes += o.votes;
 				    		});
