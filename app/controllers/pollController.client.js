@@ -14,6 +14,10 @@ exports.index = function(req, res) {
 exports.apiPolls = function(req, res) {
   var category = req.query.category;
   var sortType = req.query.sortType;
+  var user = null;
+  if (req.user) {
+    user = req.user._id.toString();
+  }
   
   Poll.find(function(err, polls) {
     if(err) { return handleError(res, err); }
@@ -42,7 +46,26 @@ exports.apiPolls = function(req, res) {
       sortedPolls = filteredPolls.concat().reverse();
     }
     
-    return res.status(200).json(sortedPolls);
+    var choicePolls = [];
+    sortedPolls.forEach(function(sPoll) {
+      var userPoll = {};
+      userPoll.title = sPoll.title;
+      userPoll._id = sPoll._id;
+      userPoll.options = sPoll.options;
+      userPoll.category = sPoll.category;
+      userPoll.voters = sPoll.voters;
+      userPoll.userChoice = null;
+      if (user) {
+        sPoll.voters.forEach(function(vote) {
+          if (vote[0] === user) {
+            userPoll['userChoice'] = vote[1];
+          }
+        })
+      }
+      choicePolls.push(userPoll);
+    })
+    
+    return res.status(200).json(choicePolls);
   });
 }
 

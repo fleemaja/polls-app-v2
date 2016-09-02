@@ -209,6 +209,28 @@ input[type="radio"] {
     margin-bottom: 20px;
 }
 
+.option-bar {
+    border-radius: 5px;
+    background: #ddd;
+    /*background: #77C7F7;*/
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 7px;
+}
+
+.option-percent {
+    margin-right: 10px;
+}
+
+.user-option {
+    background: rgba(151,187,205,0.6);
+}
+
+.option-info {
+    padding: 10px 5px;
+    line-height: 24px;
+}
+
 @media (max-width: 800px) {
     .navbar-header {
         float: left;

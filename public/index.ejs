@@ -110,6 +110,11 @@
 				getPolls();
 			});
 			
+			// COLORS = [
+   //             "rgba(253,180,92,0.6)",
+   //             "rgba(151,187,205,0.6)"
+   //             ]
+			
 			function getPolls() {
 				var category = $('#select-category').val();
 			    var sortType = $('#select-sort').val();
@@ -123,22 +128,40 @@
 				    },
 				    success: function(json) {
 				    	html = "";
+				    	var pollIDX = 0;
 				    	json.forEach(function(poll) {
 				    		var pollTitle = $('<textarea />').html(poll.title).text();
 				    		html += "<div class='grid-item'>";
 				    		html += "<h3><a href='/polls/" + poll._id + "' >" + pollTitle + "</a></h3>";
 				    		html += "<form action='/polls/" + poll._id + "' method='post' id=" + poll._id + ">";
-				    		var totalVotes = 0;
-			    			poll.options.forEach(function(o) {
+				    		var totalVotes = poll.voters.length;
+				    		poll.options.forEach(function(o) {
 			    				var optionText = $('<textarea />').html(o.text).text();
-				    			html += "<input type='radio' name='option' class='regular-radio big-radio' value='" + optionText.replace(/\"/g, '&#34;').replace(/\'/g, '&#39;') + "' >";
-				    			html += "<span class='text-option'>" + optionText + "</span><br>";
-				    			totalVotes += o.votes;
+			    				var optionPercent = Math.round(parseFloat(o.votes/totalVotes) * 100).toString() + "%";
+			    				var optionPercentPadding = "";
+			    				if (optionPercent.length === 3) {
+			    					optionPercentPadding = 7;
+			    				} else if (optionPercent.length === 2) {
+			    					optionPercentPadding = 15;
+			    				} else {
+			    					optionPercentPadding = 0;
+			    				}
+			    				if (poll.userChoice) {
+			    					if (poll.userChoice === optionText) {
+			    					    html += "<span class='option-bar user-option' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;' >" + optionPercent + "</span>" + optionText + "</span><i class='fa fa-check-circle-o' aria-hidden='true'></i>" + "</span>";
+			    					} else {
+			    						html += "<span class='option-bar' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;'>" + optionPercent + "</span>" + optionText + "</span></span>";
+			    					}
+		    					} else {
+				    				html += "<input type='radio' name='option' class='regular-radio big-radio' value=\'" + optionText.replace(/\"/g, '&#34;').replace(/\'/g, '&#39;') + "\' >";
+					    			html += "<span class='text-option'>" + optionText + "</span><br>";
+				    			}
 				    		});
 				    		html += "<input class='btn btn-secondary' type='submit' value='Vote'>";
 				    		html += "<span class='total-votes'>" + totalVotes + " votes</span>";
 				    		html += "<span class='total-votes'>Category: " + poll.category + "</span>";
 				    		html += "</form></div>";
+				    		pollIDX += 1;
 				    	});
 				    	$('.grid').html(html);
 				    	
