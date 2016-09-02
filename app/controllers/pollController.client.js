@@ -54,6 +54,7 @@ exports.apiPolls = function(req, res) {
       userPoll.options = sPoll.options;
       userPoll.category = sPoll.category;
       userPoll.voters = sPoll.voters;
+      userPoll.date = sPoll.date;
       userPoll.userChoice = null;
       if (user) {
         sPoll.voters.forEach(function(vote) {
@@ -107,7 +108,7 @@ exports.show = function(req, res) {
 // Creates a new poll in the DB.
 exports.create = function(req, res) {
   var options = req.body.options.split("\r\n").filter(function(o) { return o != '' });
-  var options = options.map(function(op) { return op.slice(0, 50) });
+  var options = options.map(function(op) { return op.slice(0, 41) });
   var options = options.getUnique();
   var parsedPoll = req.body;
   var parsedOptions = [];
@@ -131,7 +132,7 @@ exports.create = function(req, res) {
 
 // adds a voter to the object
 exports.vote = function(req, res) {
-  var choice = req.body.option.slice(0, 50);
+  var choice = req.body.option.slice(0, 41);
   
   var user = null;
   if (req.user) {
@@ -158,6 +159,7 @@ exports.vote = function(req, res) {
           option.votes += 1;
           poll.voters.push([user, choice]);
           messageJSON = poll;
+          messageJSON['userChoice'] = choice;
         }
       });
     } else if (user && !userNotVoted) {

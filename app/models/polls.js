@@ -7,9 +7,9 @@ var relationship = require("mongoose-relationship");
 var User = require('./users.js');
 
 var PollSchema = new Schema({
-    created: Date,
-	title: { type: String, required: true },
+	  title: { type: String, required: true },
     user: { type:Schema.ObjectId, ref:"User", childPath:"polls" },
+    date: { type: Date, default: Date.now },
     options: {
         type: [{
             text: String,
@@ -38,7 +38,7 @@ PollSchema.pre('save', function(next) {
   this.options = this.options.map(function(option){
       option.text = sanitizeHtml(option.text, sanitize);
       // 50 char max
-      option.text = option.text.slice(0, 50);
+      option.text = option.text.slice(0, 41);
       return option;
     });
   next();

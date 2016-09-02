@@ -78,7 +78,8 @@
 			$('.grid').on('click', 'input[type="submit"]', function(e) {
 			    e.preventDefault();
 			    
-			    var formID = $(e.currentTarget).parent().attr('id');
+			    var form = $(e.currentTarget).parent();
+			    var formID = form.attr('id');
 			    
 			    var selectedOption = $('input[name=option]:checked', "#" + formID).val();
 			    
@@ -92,11 +93,33 @@
 			    		if (json.hasOwnProperty('message')) {
 			    			if (json['message'] === "Login to vote") {
 			    				modal.show();
-			    			} else {
-			    				alert(json['message']);
 			    			}
 			    		} else {
-			    			alert("You voted!");
+			    			html = "";
+			    			var totalVotes = json.voters.length;
+				    		json.options.forEach(function(o) {
+			    				var optionText = $('<textarea />').html(o.text).text();
+			    				var optionPercent = Math.round(parseFloat(o.votes/totalVotes) * 100).toString() + "%";
+			    				var optionPercentPadding = "";
+			    				if (optionPercent.length === 3) {
+			    					optionPercentPadding = 7;
+			    				} else if (optionPercent.length === 2) {
+			    					optionPercentPadding = 15;
+			    				} else {
+			    					optionPercentPadding = 0;
+			    				}
+			    				
+		    					if (selectedOption === optionText) {
+		    					    html += "<span class='option-bar user-option' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;' >" + optionPercent + "</span>" + optionText + "</span><i class='fa fa-check-circle-o' aria-hidden='true'></i>" + "</span>";
+		    					} else {
+		    						html += "<span class='option-bar' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;'>" + optionPercent + "</span>" + optionText + "</span></span>";
+		    					}
+				    		});
+			    			html += "<input class='btn btn-secondary' type='submit' value='Vote'>";
+				    		html += "<span class='total-votes'>" + totalVotes + " votes</span>";
+				    		html += "<span class='total-votes'>Category: " + json.category + "</span>";
+				    		html += "<span class='total-votes'>Date: " + json.date + "</span>";
+			    			form.html(html);
 			    		}
 			    	}
 			    })
@@ -109,11 +132,6 @@
 			$('#select-category').on('change', function() {
 				getPolls();
 			});
-			
-			// COLORS = [
-   //             "rgba(253,180,92,0.6)",
-   //             "rgba(151,187,205,0.6)"
-   //             ]
 			
 			function getPolls() {
 				var category = $('#select-category').val();
@@ -160,6 +178,7 @@
 				    		html += "<input class='btn btn-secondary' type='submit' value='Vote'>";
 				    		html += "<span class='total-votes'>" + totalVotes + " votes</span>";
 				    		html += "<span class='total-votes'>Category: " + poll.category + "</span>";
+				    		html += "<span class='total-votes'>Date: " + poll.date + "</span>";
 				    		html += "</form></div>";
 				    		pollIDX += 1;
 				    	});
