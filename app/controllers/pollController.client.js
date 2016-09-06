@@ -124,7 +124,7 @@ exports.apiPolls = function(req, res) {
 
 // Creates a new poll in the DB.
 exports.create = function(req, res) {
-  var options = req.body.options.split("\r\n").filter(function(o) { return o != '' });
+  var options = req.body.options.split(",").filter(function(o) { return o != '' });
   var options = options.map(function(op) { return op.slice(0, 41) });
   var options = options.getUnique();
   var parsedPoll = req.body;
