@@ -11,15 +11,66 @@ exports.index = function(req, res) {
     return res.render(path + '/public/index.ejs', showObj);
 };
 
+exports.userPolls = function(req, res) {
+    var showObj = { user: null };
+    if (req.user) {
+      showObj['user'] = req.user._id.toString()
+		}
+    return res.render(path + '/public/mypolls.ejs', showObj);
+};
+
+// Get a single poll
+exports.show = function(req, res) {
+  Poll.findById(req.params.id, function (err, poll) {
+    if(err) { return handleError(res, err); }
+    if(!poll) { return res.status(404).send('Not Found'); }
+    var showObj = { user: null, poll: poll };
+    if (req.user) {
+      showObj['user'] = req.user._id.toString();
+  	}
+    return res.render(path + '/public/show.ejs', showObj);
+  })
+};
+
+exports.showAPI = function(req, res) {
+  Poll.findById(req.params.id, function (err, poll) {
+    if(err) { return handleError(res, err); }
+    if(!poll) { return res.status(404).send('Not Found'); }
+    var userPoll = {};
+    userPoll.title = poll.title;
+    userPoll._id = poll._id;
+    userPoll.options = poll.options;
+    userPoll.category = poll.category;
+    userPoll.voters = poll.voters;
+    userPoll.date = poll.date;
+    userPoll.userChoice = null;
+    userPoll.username = poll.username;
+    if (req.user) {
+      poll.voters.forEach(function(vote) {
+        if (vote[0] === req.user._id.toString()) {
+          userPoll['userChoice'] = vote[1];
+        }
+      })
+    }
+    return res.status(200).json(userPoll);
+  });
+}
+
 exports.apiPolls = function(req, res) {
   var category = req.query.category;
   var sortType = req.query.sortType;
+  var param = {};
+  
+  if (req.query.myPolls) {
+    var param = { user: req.user._id };
+  } 
+  
   var user = null;
   if (req.user) {
     user = req.user._id.toString();
   }
   
-  Poll.find(function(err, polls) {
+  Poll.find(param, function(err, polls) {
     if(err) { return handleError(res, err); }
     var filteredPolls = polls.concat();
     if (category !== "all") {
@@ -56,6 +107,7 @@ exports.apiPolls = function(req, res) {
       userPoll.voters = sPoll.voters;
       userPoll.date = sPoll.date;
       userPoll.userChoice = null;
+      userPoll.username = sPoll.username;
       if (user) {
         sPoll.voters.forEach(function(vote) {
           if (vote[0] === user) {
@@ -69,41 +121,6 @@ exports.apiPolls = function(req, res) {
     return res.status(200).json(choicePolls);
   });
 }
-
-// Get list of polls
-exports.userPolls = function(req, res) {
-  Poll.find({ user: req.user._id }, function (err, polls) {
-    if(err) { return handleError(res, err); }
-    var voteSorted = polls.concat().sort(function(p1, p2) {
-      var p1Votes = 0;
-      p1.options.forEach(function(o) {
-        p1Votes += o.votes;
-      });
-      var p2Votes = 0;
-      p2.options.forEach(function(o) {
-        p2Votes += o.votes;
-      });
-      return p2Votes - p1Votes;
-    });
-    return res.render(path + '/public/mypolls.ejs', {
-				polls: voteSorted,
-				user: req.user._id.toString()
-		});
-  });
-};
-
-// Get a single poll
-exports.show = function(req, res) {
-  Poll.findById(req.params.id, function (err, poll) {
-    if(err) { return handleError(res, err); }
-    if(!poll) { return res.status(404).send('Not Found'); }
-    var showObj = { poll: poll, user: null };
-    if (req.user) {
-      showObj['user'] = req.user._id.toString()
-		}
-    return res.render(path + '/public/show.ejs', showObj);
-  });
-};
 
 // Creates a new poll in the DB.
 exports.create = function(req, res) {
@@ -120,6 +137,7 @@ exports.create = function(req, res) {
   }
   parsedPoll.options = parsedOptions;
   parsedPoll.user = req.user.id;
+  parsedPoll.username = req.user.local.username;
   Poll.create(parsedPoll, function(err, poll) {
     if(err) { return handleError(res, err); }
     var showObj = { poll: poll, user: null };

@@ -76,6 +76,12 @@ module.exports = function (app, passport) {
 	   .post(function(req, res) {
 	   	   pollController.vote(req, res);
 	   });
+	   
+    app.route('/api/:id')
+       .get(function(req, res) {
+       	   pollController.showAPI(req, res);
+       })
+       
 	  
     app.route('/delete/:id')
        .post(isLoggedIn, function(req, res) {

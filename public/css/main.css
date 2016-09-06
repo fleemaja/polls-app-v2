@@ -92,7 +92,7 @@ input[type="radio"] {
 }
 
 #graph {
-	width: 400px;
+	width: 350px;
 	text-align: center;
 }
 
@@ -133,6 +133,7 @@ input[type="radio"] {
 
 .grid-item h3 {
     margin: 0;
+    margin-top: 5px;
     margin-bottom: 10px;
     font-weight: 100;
 }
@@ -160,10 +161,15 @@ input[type="radio"] {
 
 .total-votes {
     color: #a0a0a0;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-top: 10px;
     vertical-align: middle;
     display:inline-block;
+}
+
+.date-display {
+    color: #a0a0a0;
+    margin-left: 10px;
 }
 
 .alert-category,
@@ -216,6 +222,10 @@ input[type="radio"] {
     display: block;
     white-space: nowrap;
     margin-bottom: 7px;
+}
+
+.username {
+    font-weight: 900;
 }
 
 .option-percent {

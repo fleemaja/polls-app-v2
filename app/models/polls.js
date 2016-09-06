@@ -9,6 +9,7 @@ var User = require('./users.js');
 var PollSchema = new Schema({
 	  title: { type: String, required: true },
     user: { type:Schema.ObjectId, ref:"User", childPath:"polls" },
+    username: String,
     date: { type: Date, default: Date.now },
     options: {
         type: [{
