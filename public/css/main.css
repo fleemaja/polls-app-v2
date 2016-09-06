@@ -76,6 +76,31 @@ input[type="radio"] {
 	font-size: 24px;
 }
 
+.cancel-btn, .confirm-btn {
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    margin: 10px;
+}
+
+.cancel-btn {
+    background: #777;
+}
+
+.cancel-btn:hover {
+    background: #555;
+}
+
+.confirm-btn {
+    background: #f0ad4e;
+}
+
+.confirm-btn:hover {
+    background: #d08b2c;
+}
 
 #poll-title {
 	margin-bottom: 40px;
@@ -98,6 +123,18 @@ input[type="radio"] {
 
 .pollOptionsInput {
     margin-bottom: 10px;
+}
+
+.remove-button {
+    float: right;
+    color: white;
+    background: #f0ad4e;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+.remove-button:hover {
+    cursor: pointer;
 }
 
 #add-choice {
@@ -188,6 +225,12 @@ input[type="radio"] {
 .date-display {
     color: #a0a0a0;
     margin-left: 10px;
+}
+
+#warningModal h3 {
+    font-weight: 100;
+    color: #333;
+    margin-bottom: 30px;
 }
 
 .alert-category,

@@ -27,10 +27,22 @@
 	        <a href="/signup"><button class="btn">Sign Up</button></a>
 	        <p>Have an account? <a href="/login">Log in >></a></p>
 	      </div>
-	
+	    </div>
+	    
+	    <div id="warningModal" class="modal">
+	      <div class="modal-content">
+	      	<div class="modal-header">
+		      	<h4>Delete Poll?</h4>
+		    </div>
+	      	<h3 class="warning-poll-title"></h3>
+	      	<button class="cancel-btn">Cancel</button>
+	        <button class="confirm-btn">Delete Poll</button>
+	      </div>
 	    </div>
 		
 		<div class="filters">
+			<h1>My Polls</h1>
+			
 			<div class="grid-sort">
 	          <select class="form-control" id="select-sort">
 	            <option selected value="most">Most votes first</option>
@@ -61,6 +73,7 @@
 		<script>
 		
 		    var modal = $('#myModal');
+		    var warningModal = $('#warningModal');
 			
 			$('document').ready(function() {
 				getPolls();
@@ -69,6 +82,30 @@
 			$('.close').on('click', function() {
 				modal.hide();
 			});
+			
+			$('.cancel-btn').on('click', function() {
+				warningModal.hide();
+			})
+			
+			$('body').on('click', '.remove-button', function(e) {
+				var pollID = $(e.currentTarget).attr('id');
+				var pollTitle = $(e.currentTarget).data("title");
+				$('.warning-poll-title').html("'" + pollTitle + "'");
+				$('.confirm-btn').data('pollID', pollID);
+				warningModal.show();
+			});
+			
+			$('.confirm-btn').on("click", function() {
+				var pollID = $(this).data('pollID');
+				$.ajax({
+					url: "https://polls-app-v2-fleemaja.c9users.io/delete/" + pollID,
+					type: 'post',
+					success: function() {
+						getPolls();
+						warningModal.hide();
+					}
+				})
+			})
 			
 			$('.grid').on('click', 'input[type="radio"]', function() {
 			    var parentID = $(this).parent().attr('id');
@@ -81,7 +118,6 @@
 			    var form = $(e.currentTarget).parent();
 			    var formID = form.attr('id');
 			   
-			    
 			    var selectedOption = $('input[name=option]:checked', "#" + formID).val();
 			    
 			    $.ajax({
@@ -180,11 +216,10 @@
 				    },
 				    success: function(json) {
 				    	html = "";
-				    	var pollIDX = 0;
 				    	json.forEach(function(poll) {
 				    		var pollTitle = $('<textarea />').html(poll.title).text();
 				    		html += "<div class='grid-item'>";
-				    		html += "<span><b>" + poll.username + " </b>" + "<span class='date-display'>" + formatDate(poll.date) + "</span><span>";
+				    		html += "<span><b>" + poll.username + " </b>" + "<span class='date-display'>" + formatDate(poll.date) + "</span><span class='remove-button' data-title='" + pollTitle + "' id=" + poll._id + ">X</span><span>";
 				    		html += "<h3><a href='/polls/" + poll._id + "' >" + pollTitle + "</a></h3>";
 				    		html += "<form action='/polls/" + poll._id + "' method='post' id=" + poll._id + ">";
 				    		var totalVotes = poll.voters.length;
@@ -200,13 +235,14 @@
 			    					optionPercentPadding = 0;
 			    				}
 			    				if (poll.userChoice) {
-			    					if (poll.userChoice === optionText) {
+			    					var uChoice = $('<textarea />').html(poll.userChoice).text();
+			    					if (uChoice === optionText) {
 			    					    html += "<span class='option-bar user-option' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;' >" + optionPercent + "</span>" + optionText + "</span><i class='fa fa-check-circle-o' aria-hidden='true'></i>" + "</span>";
 			    					} else {
 			    						html += "<span class='option-bar' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;'>" + optionPercent + "</span>" + optionText + "</span></span>";
 			    					}
 		    					} else {
-				    				html += "<input type='radio' name='option' class='regular-radio big-radio' value=\'" + optionText.replace(/\"/g, '&#34;').replace(/\'/g, '&#39;') + "\' >";
+				    				html += "<input type='radio' name='option' class='regular-radio big-radio' value=\'" + optionText.replace(/\'/g, '&#39;') + "\' >";
 					    			html += "<span class='text-option'>" + optionText + "</span><br>";
 				    			}
 				    		});
@@ -217,7 +253,6 @@
 				    		html += "<span class='total-votes'>&bull;</span>";
 				    		html += "<span class='total-votes'>" + displayCategory[poll.category] + "</span>";
 				    		html += "</form></div>";
-				    		pollIDX += 1;
 				    	});
 				    	$('.grid').html(html);
 				    	

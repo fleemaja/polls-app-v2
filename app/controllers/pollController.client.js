@@ -150,8 +150,8 @@ exports.create = function(req, res) {
 
 // adds a voter to the object
 exports.vote = function(req, res) {
-  var choice = req.body.option.slice(0, 41).replace(/\"/g, '&quot;');
-  choice = choice.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/\&/g, '&amp;');
+  var choice = req.body.option.slice(0, 41).replace(/\&/g, '&amp;').replace(/\"/g, '&quot;');
+  choice = choice.replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
   
   var user = null;
   if (req.user) {
