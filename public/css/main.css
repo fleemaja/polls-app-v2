@@ -137,14 +137,50 @@ input[type="radio"] {
     color: #428bca;
 }
 
+h1 {
+    font-family: 'Futura'
+}
+
+.avatar {
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#upload-avatar {
+    margin-left: 64px;
+}
+
+#user-settings {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+#user-settings h1 {
+    margin: 10px;
+}
+
+#newpoll {
+    text-align: center;
+    padding: 0 20px;
+}
+
+#newpoll h1 {
+    margin-bottom: 40px;
+}
+
 .remove-button:hover {
     cursor: pointer;
 }
 
 #add-choice {
-    color: #428bca;
+    color: #2069a8;
     font-size: 16px;
+    font-weight: 900;
     margin-bottom: 20px;
+    text-align: left;
 }
 
 #options-field {
@@ -194,6 +230,7 @@ input[type="radio"] {
     margin: 0;
     margin-top: 5px;
     margin-bottom: 10px;
+    margin-left: 69px;
     font-weight: 100;
 }
 
@@ -229,6 +266,11 @@ input[type="radio"] {
 .date-display {
     color: #a0a0a0;
     margin-left: 10px;
+    margin-top: 10px;
+}
+
+b {
+    margin-left: 69px;
 }
 
 #warningModal h3 {

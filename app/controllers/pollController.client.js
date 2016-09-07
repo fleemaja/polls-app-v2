@@ -45,6 +45,7 @@ exports.showAPI = function(req, res) {
     userPoll.date = poll.date;
     userPoll.userChoice = null;
     userPoll.username = poll.username;
+    userPoll.user = poll.user;
     if (req.user) {
       poll.voters.forEach(function(vote) {
         if (vote[0] === req.user._id.toString()) {
@@ -110,6 +111,7 @@ exports.apiPolls = function(req, res) {
       userPoll.date = sPoll.date;
       userPoll.userChoice = null;
       userPoll.username = sPoll.username;
+      userPoll.user = sPoll.user;
       if (user) {
         sPoll.voters.forEach(function(vote) {
           if (vote[0] === user) {

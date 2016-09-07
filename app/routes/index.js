@@ -2,6 +2,7 @@
 
 var path = process.cwd();
 var pollController = require(path + '/app/controllers/pollController.client.js');
+var userController = require(path + '/app/controllers/userController.client.js');
 
 module.exports = function (app, passport) {
 
@@ -53,6 +54,22 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			pollController.userPolls(req, res);
 		});
+		
+    app.route('/settings')
+        .get(isLoggedIn, function(req, res) {
+        	res.render(path + '/public/settings.ejs', {
+				user: req.user._id.toString(),
+				avatarURL: req.user.avatarURL
+			});
+        })
+        
+    app.route('/settings/:id')
+        .get(function(req, res) {
+        	userController.getAvatar(req, res);
+        })
+        .post(isLoggedIn, function(req, res) {
+        	userController.update(req, res);
+        })
 		
     app.route('/newpoll')
 		.get(isLoggedIn, function (req, res) {

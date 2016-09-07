@@ -7,7 +7,8 @@ var UserSchema = new Schema({
         username     : String,
         password     : String,
     },
-	polls: [{ type:Schema.ObjectId, ref:"Poll" }]
+	polls: [{ type:Schema.ObjectId, ref:"Poll" }],
+	avatarURL: { type: String, default: 'https://res.cloudinary.com/dkldedq8v/image/upload/v1473265444/Screen_Shot_2016-09-07_at_11.27.57_AM_mqsppm.png' }
 });
 
 // methods ======================

@@ -194,6 +194,14 @@
 				    	html = "";
 			    		var pollTitle = $('<textarea />').html(poll.title).text();
 			    		html += "<div class='grid-item'>";
+			    		html += "<img src='' class='avatar " + poll.user + "' >";
+			    		$.ajax({
+			    			url: "https://polls-app-v2-fleemaja.c9users.io/settings/" + poll.user,
+			    			type: 'get',
+			    			success: function(json) {
+			    				$('.' + poll.user).attr('src', json['avatarURL']);
+			    			}
+			    		})
 			    		html += "<span><b>" + poll.username + " </b>" + "<span class='date-display'>" + formatDate(poll.date) + "</span><span>";
 			    		html += "<h3><a href='/polls/" + poll._id + "' >" + pollTitle + "</a></h3>";
 			    		html += "<form action='/polls/" + poll._id + "' method='post' id=" + poll._id + ">";
