@@ -94,7 +94,9 @@ exports.apiPolls = function(req, res) {
         return p2Votes - p1Votes;
       });
     } else if (sortType === "newest") {
-      sortedPolls = filteredPolls.concat().reverse();
+      sortedPolls = filteredPolls.concat().sort(function(p1, p2) {
+        return p2.date - p1.date;
+      });
     }
     
     var choicePolls = [];
