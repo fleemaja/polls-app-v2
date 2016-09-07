@@ -216,7 +216,7 @@
 				    },
 				    success: function(json) {
 				    	if (json.length < 1) {
-				    		html = "<div class='grid-item'><h3>No polls. <a href='/newpoll' id='empty-message'>Create a new poll</a></h3></div>";
+				    		html = "<div class='grid-item'><h3 id='no-message'>No polls. <a href='/newpoll' id='empty-message'>Create a new poll</a></h3></div>";
 				    	} else {
 					    	html = "";
 					    	json.forEach(function(poll) {

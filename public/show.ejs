@@ -193,7 +193,7 @@
 				    success: function(poll) {
 				    	html = "";
 			    		var pollTitle = $('<textarea />').html(poll.title).text();
-			    		html += "<div class='grid-item'>";
+			    		html += "<div class='grid-item' id='show-grid-item'>";
 			    		html += "<img src='' class='avatar " + poll.user + "' >";
 			    		$.ajax({
 			    			url: "https://polls-app-v2-fleemaja.c9users.io/settings/" + poll.user,

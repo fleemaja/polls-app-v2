@@ -9,7 +9,7 @@
     </head>
     
     <header>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header">
     	      <a class="navbar-brand" href="/">Polls</a>
     	    </div>
@@ -26,6 +26,7 @@
         <% if (message.length > 0) { %>
             <div class="alert alert-danger"><%= message %></div>
         <% } %>
+        <div class="alert alert-danger" id="verify">Passwords do not match</div>
     
         <!-- LOGIN FORM -->
         <form action="/signup" method="post">
@@ -36,6 +37,10 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password">
+            </div>
+            <div class="form-group">
+                <label>Verify Password</label>
+                <input type="password" class="form-control" id="verify-password">
             </div>
     
             <button type="submit" class="btn btn-warning btn-lg">Signup</button>
@@ -49,4 +54,17 @@
     </div>
     
     </div>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+              $('form').on('submit', function(e){
+                  if ($('input[name="password"]').val() !== $('#verify-password').val()) {
+                      e.preventDefault();
+                      $('#verify').show();
+                  }
+              });
+        });
+    </script>
 </html>

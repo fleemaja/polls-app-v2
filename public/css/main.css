@@ -1,11 +1,16 @@
 body {
 	font-family: 'Helvetica';
 	background: #f5f8fa;
+	margin-top: 80px;
 }
 
 li:not(.poll-items):not(#github-login) {
 	margin-right: 20px;
 	margin-top: 10px;
+}
+
+#verify {
+    display: none;
 }
 
 #github-login {
@@ -229,9 +234,14 @@ h1 {
 .grid-item h3 {
     margin: 0;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: 69px;
     font-weight: 100;
+}
+
+#no-message {
+    margin: 0;
+    padding: 30px 10px;
 }
 
 .grid-item p {
@@ -346,6 +356,10 @@ b {
 .option-info {
     padding: 10px 5px;
     line-height: 24px;
+}
+
+#show-grid-item {
+    min-height: 322px;
 }
 
 @media (max-width: 800px) {

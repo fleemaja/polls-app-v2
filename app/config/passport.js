@@ -50,6 +50,8 @@ module.exports = function (passport) {
             // check to see if theres already a user with that username
             if (user) {
                 return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+            } else if (password.length < 6) {
+                return done(null, false, req.flash('signupMessage', 'Password must be 6 or more characters.'));
             } else {
 
                 // if there is no user with that username
