@@ -8,6 +8,7 @@ var session = require('express-session');
 var flash    = require('connect-flash');
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
+var favicon = require('serve-favicon');
 
 var app = express();
 require('dotenv').load();
@@ -30,6 +31,8 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/clementinej
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
+
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 app.use(session({ secret: process.env.SUPER_SECRET }));
 app.use(passport.initialize());

@@ -148,7 +148,7 @@ exports.create = function(req, res) {
     if (req.user) {
       showObj['user'] = req.user._id.toString()
 		}
-    return res.render(path + '/public/show.ejs', showObj);
+    return res.redirect('/polls/' + poll._id.toString());
   });
 };
 

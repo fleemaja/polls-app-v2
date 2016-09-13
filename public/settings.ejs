@@ -26,6 +26,22 @@
        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
        
        <script>
+           var CLOUDINARY_OPTIONS = {
+		    cloud_name: "<%= process.env.CLOUD_NAME %>",
+		    upload_preset: "<%= process.env.UPLOAD_PRESET %>",
+		    theme: 'minimal',
+		    multiple: false,
+		    max_image_width: 96,
+		    max_image_height: 96
+		  };
+		  
+		  var msnry = new Masonry( '.grid', {
+						  columnWidth: 350,
+						  isFitWidth: true, 
+						  gutter: 20,
+						  itemSelector: '.grid-item'
+						});
+						
 	       $('button').click(function() {
 	       	 cloudinary.openUploadWidget(CLOUDINARY_OPTIONS, function(error, results){
 		       if(!error){
@@ -46,24 +62,6 @@
 		     });
 	       })
        </script>
-
-	   <script type="text/javascript">
-		  window.CLOUDINARY_OPTIONS = {
-		    cloud_name: "<%= process.env.CLOUD_NAME %>",
-		    upload_preset: "<%= process.env.UPLOAD_PRESET %>",
-		    theme: 'minimal',
-		    multiple: false,
-		    max_image_width: 48,
-		    max_image_height: 48
-		  };
-		  
-		  var msnry = new Masonry( '.grid', {
-						  columnWidth: 350,
-						  isFitWidth: true, 
-						  gutter: 20,
-						  itemSelector: '.grid-item'
-						});
-	   </script>
    </body>
 
 </html>
