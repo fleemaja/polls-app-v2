@@ -7,7 +7,8 @@ $('#add-choice').click(function(e) {
 $('#options-field').change(function() {
   var options = [];
   $(".pollOptionsInput").each(function() {
-    options.push($(this).val());
+    var optionVal = $(this).val().replace(/\,/g, '&#44;');
+    options.push(optionVal);
   });
   $('#pollOptionsInput').val(options);
 })
