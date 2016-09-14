@@ -1,11 +1,11 @@
 {
-  "name": "polls-app",
+  "name": "polls-app-v2",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fleemaja/polls-app.git"
+    "url": "git+https://github.com/fleemaja/polls-app-v2.git"
   },
   "keywords": [
     "MongoDB",

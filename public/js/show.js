@@ -1,4 +1,5 @@
 var modal = $('#myModal');
+var appURL = 'https://still-oasis-41820.herokuapp.com/';
 			
 $('document').ready(function() {
 	getPoll();
@@ -23,7 +24,7 @@ $('.grid').on('click', 'input[type="submit"]', function(e) {
     var selectedOption = $('input[name=option]:checked', "#" + formID).val();
     
     $.ajax({
-    	url: "https://polls-app-v2-fleemaja.c9users.io/polls/" + formID,
+    	url: appURL + "polls/" + formID,
     	type: 'post',
     	data: {
     		option: selectedOption
@@ -143,7 +144,7 @@ function getPoll() {
 	var pollID = $('.grid').attr('id');
     
 	$.ajax({
-	  	url: "https://polls-app-v2-fleemaja.c9users.io/api/" + pollID,
+	  	url: appURL + "api/" + pollID,
 	  	dataType: 'json',
 	    success: function(poll) {
 	    	html = "";
@@ -151,7 +152,7 @@ function getPoll() {
     		html += "<div class='grid-item' id='show-grid-item'>";
     		html += "<img src='' class='avatar " + poll.user + "' >";
     		$.ajax({
-    			url: "https://polls-app-v2-fleemaja.c9users.io/settings/" + poll.user,
+    			url: appURL + "settings/" + poll.user,
     			type: 'get',
     			success: function(json) {
     				$('.' + poll.user).attr('src', json['avatarURL']);

@@ -1,5 +1,6 @@
 var modal = $('#myModal');
 var warningModal = $('#warningModal');
+var appURL = 'https://still-oasis-41820.herokuapp.com/';
 
 $('document').ready(function() {
 	getPolls();
@@ -24,7 +25,7 @@ $('body').on('click', '.remove-button', function(e) {
 $('.confirm-btn').on("click", function() {
 	var pollID = $(this).data('pollID');
 	$.ajax({
-		url: "https://polls-app-v2-fleemaja.c9users.io/delete/" + pollID,
+		url: appURL + "delete/" + pollID,
 		type: 'post',
 		success: function() {
 			getPolls();
@@ -47,7 +48,7 @@ $('.grid').on('click', 'input[type="submit"]', function(e) {
     var selectedOption = $('input[name=option]:checked', "#" + formID).val();
     
     $.ajax({
-    	url: "https://polls-app-v2-fleemaja.c9users.io/polls/" + formID,
+    	url: appURL + "polls/" + formID,
     	type: 'post',
     	data: {
     		option: selectedOption
@@ -133,7 +134,7 @@ function getPolls() {
     var sortType = $('#select-sort').val();
     
 	$.ajax({
-	  	url: "https://polls-app-v2-fleemaja.c9users.io/api",
+	  	url: appURL + "api",
 	  	dataType: 'json',
 	    data: { 
 	        "category": category,
@@ -150,7 +151,7 @@ function getPolls() {
 		    		html += "<div class='grid-item'>";
 		    		html += "<img src='' class='avatar " + poll.user + "' >";
 		    		$.ajax({
-		    			url: "https://polls-app-v2-fleemaja.c9users.io/settings/" + poll.user,
+		    			url: 'https://still-oasis-41820.herokuapp.com/' + "settings/" + poll.user,
 		    			type: 'get',
 		    			success: function(json) {
 		    				$('.' + poll.user).attr('src', json['avatarURL']);
