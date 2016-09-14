@@ -114,8 +114,6 @@ function getChart() {
     var optionLabels = ctx.get(0).getAttribute("chart-labels").split(",").map(function(ol) { 
 					      return ol.replace(/&#44;/g, ',');
 					  });
-					  
-	alert(optionLabels);
     
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
