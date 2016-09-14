@@ -112,6 +112,7 @@ function getChart() {
                           return parseInt(item, 10);
                       });
     var optionLabels = ctx.get(0).getAttribute("chart-labels").split(",");
+    var optionLabels = optionLabels.map(function(ol) { return ol.replace(/\&\#\4\4\;/g, ','); });
     
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',

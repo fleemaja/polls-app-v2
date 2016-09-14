@@ -32,7 +32,7 @@
 			<div class="grid-item" id="graph">
                   <canvas id="myDoughnutChart" width="300" height="300" 
             		      chart-data="<%= poll.options.map(function(option) { return option.votes }) %>" 
-            		      chart-labels="<%= poll.options.map(function(option) { return option.text.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g, '"') }) %>">
+            		      chart-labels="<%= poll.options.map(function(option) { return option.text.replace(/\,/g, '&#44;').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g, '"') }) %>">
             	  </canvas>
               </div>
 	    </div>
