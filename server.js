@@ -1,6 +1,6 @@
 'use strict';
 
-var http = require("http");
+var https = require("https");
 var express = require('express');
 var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
@@ -48,5 +48,5 @@ app.listen(port,  function () {
 });
 
 setInterval(function() {
-    http.get("https://still-oasis-41820.herokuapp.com/");
+    https.get("https://still-oasis-41820.herokuapp.com/");
 }, 300000); // ping site every 5 minutes to keep heroku from sleeping
