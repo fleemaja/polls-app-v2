@@ -1,5 +1,5 @@
 body {
-	font-family: 'Helvetica';
+	font-family: 'Helvetica', sans-serif;
 	background: #f5f8fa;
 	margin-top: 80px;
 }
@@ -63,7 +63,7 @@ ul {
 
 .navbar-default {
     background: white;
-    font-family: 'Futura';
+    font-family: 'Futura', 'Helvetica', sans-serif;
 }
 
 #new-poll {
@@ -143,7 +143,7 @@ input[type="radio"] {
 }
 
 h1 {
-    font-family: 'Futura'
+    font-family: 'Futura', 'Helvetica', sans-serif;
 }
 
 .avatar {
