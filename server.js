@@ -47,6 +47,7 @@ app.listen(port,  function () {
 	console.log('Node.js listening on port ' + port + '...');
 });
 
-setInterval(function() {
-    https.get("https://still-oasis-41820.herokuapp.com/");
-}, 300000); // ping site every 5 minutes to keep heroku from sleeping
+
+// setInterval(function() {
+//     https.get("https://still-oasis-41820.herokuapp.com/");
+// }, 300000); // ping site every 5 minutes to keep heroku from sleeping
