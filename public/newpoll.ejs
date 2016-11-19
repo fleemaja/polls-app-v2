@@ -1,51 +1,56 @@
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Poll</title>
-    
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<link href="/public/css/main.css" rel="stylesheet" type="text/css">
-</head>
 
-<%- include header.ejs %>
+  	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  	<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+  </head>
 
-<body>
-    <div class="grid">
-   	  <div class="grid-item" id="newpoll">
-        <h1>Make a New Poll!</h1>
-        
-        <!-- frontend form validation -->
-        <div class="alert alert-danger alert-category">Poll must have a category</div>
-        <div class="alert alert-danger alert-options">Poll must have at least two options</div>
-        
-        <form action="/newpoll" method="post">
-            <div class="form-group">
-              <select name="category" class="form-control" id="pollCategoryInput">
-                <option selected disabled hidden style='display: none' value=''>Select Category</option>
-                <option value="sports">Sports &amp; Fitness</option>
-                <option value="movies">TV &amp; Movies</option>
-                <option value="music">Music &amp; Art</option>
-                <option value="food">Food &amp; Travel</option>
-                <option value="science">Science &amp; Technology</option>
-                <option value="news">News &amp; Politics</option>
-                <option value="misc">Miscellaneous</option>
-              </select>
-            </div>
-            <fieldset class="form-group">
-                <textarea name="title" rows="4" class="form-control" id="pollTitleInput" placeholder="Ask a question..."></textarea>
-            </fieldset>
-            <fieldset class="form-group" id="options-field">
-                <input type="hidden" name="options" id="pollOptionsInput" value="">
-                <input type="text" class="form-control pollOptionsInput" placeholder="Choice 1">
-                <input type="text" class="form-control pollOptionsInput" placeholder="Choice 2">
-            </fieldset>
-            <p id="add-choice">+ Add a Choice</p>
-            <button type="submit" class="btn btn-warning btn-lg">Submit</button>
-        </form>
+  <%- include header.ejs %>
+
+  <body>
+      <div class="grid">
+     	  <div class="grid-item" id="newpoll">
+          <h1>Make a New Poll!</h1>
+
+          <!-- frontend form validation -->
+          <div class="alert alert-danger alert-category">Poll must have a category</div>
+          <div class="alert alert-danger alert-options">Poll must have at least two options</div>
+
+          <form action="/newpoll" method="post">
+              <div class="form-group">
+                <select name="category" class="form-control" id="pollCategoryInput">
+                  <option selected disabled hidden style='display: none' value=''>Select Category</option>
+                  <option value="sports">Sports &amp; Fitness</option>
+                  <option value="movies">TV &amp; Movies</option>
+                  <option value="music">Music &amp; Art</option>
+                  <option value="food">Food &amp; Travel</option>
+                  <option value="science">Science &amp; Technology</option>
+                  <option value="news">News &amp; Politics</option>
+                  <option value="misc">Miscellaneous</option>
+                </select>
+              </div>
+              <fieldset class="form-group">
+                  <textarea name="title" rows="4" class="form-control" id="pollTitleInput" placeholder="Ask a question..."></textarea>
+              </fieldset>
+              <fieldset class="form-group" id="options-field">
+                  <input type="hidden" name="options" id="pollOptionsInput" value="">
+                  <input type="text" class="form-control pollOptionsInput" placeholder="Choice 1">
+                  <input type="text" class="form-control pollOptionsInput" placeholder="Choice 2">
+              </fieldset>
+              <p id="add-choice">+ Add a Choice</p>
+              <button type="submit" class="btn btn-warning btn-lg">Submit</button>
+          </form>
+        </div>
       </div>
-    </div>
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
-    
-    <script type="text/javascript" src="/public/js/newpoll.js" ></script>
-</body>
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
+
+      <script type="text/javascript" src="/public/js/newpoll.js" ></script>
+  </body>
+</html>

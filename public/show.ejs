@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 	<head>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><%= poll.title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>') %></title>
-		
+
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
@@ -27,22 +27,22 @@
 	        <p>Have an account? <a href="/login">Log in >></a></p>
 	      </div>
 	    </div>
-		
+
 		<div class="grid" id="<%= poll.id %>">
 			<div class="grid-item" id="graph">
-                  <canvas id="myDoughnutChart" width="300" height="300" 
-            		      chart-data="<%= poll.options.map(function(option) { return option.votes }) %>" 
+                  <canvas id="myDoughnutChart" width="300" height="300"
+            		      chart-data="<%= poll.options.map(function(option) { return option.votes }) %>"
             		      chart-labels="<%= poll.options.map(function(option) { return option.text.replace(/\,/g, '&#44;').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g, '"') }) %>">
             	  </canvas>
               </div>
 	    </div>
-		
+
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
-		
+
 		<script type="text/javascript" src="/public/js/show.js" ></script>
-		
+
 	</body>
 
 </html>

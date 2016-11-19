@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 	<head>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>All Polls</title>
-		
+
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
    <%- include header.ejs %>
 
 	<body>
-		
+
 	   <div id="myModal" class="modal">
 	      <div class="modal-content">
 	      	<div class="modal-header">
@@ -28,7 +28,7 @@
 	        <p>Have an account? <a href="/login">Log in >></a></p>
 	      </div>
 	    </div>
-		
+
 		<div class="filters">
 			<div class="grid-sort">
 	          <select class="form-control" id="select-sort">
@@ -36,7 +36,7 @@
 	            <option value="newest">Newest first</option>
 	          </select>
 	        </div>
-	        
+
 	        <div class="grid-category">
 	          <select class="form-control" id="select-category">
 	            <option selected value="all">All categories</option>
@@ -50,15 +50,15 @@
 	          </select>
 	        </div>
 		</div>
-		
+
 		<div class="grid">
 	    </div>
-		
+
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.1.1/masonry.pkgd.min.js"></script>
-		
+
 		<script type="text/javascript" src="/public/js/index.js"></script>
-		
+
 	</body>
 
 </html>

@@ -1,24 +1,13 @@
 {
   "name": "polls-app-v2",
-  "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fleemaja/polls-app-v2.git"
   },
-  "keywords": [
-    "MongoDB",
-    "Mongoose",
-    "full stack",
-    "Express",
-    "Node",
-    "javascript"
-  ],
   "scripts": {
     "start": "node server.js"
   },
-  "author": "",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
