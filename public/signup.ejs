@@ -28,24 +28,32 @@
         <% if (message.length > 0) { %>
             <div class="alert alert-danger"><%= message %></div>
         <% } %>
-        <div class="alert alert-danger" id="verify">Passwords do not match</div>
 
         <!-- LOGIN FORM -->
         <form action="/signup" method="post">
             <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" name="username">
+                <label for="username">
+                    <span>Username</span>
+                    <input type="text" class="form-control" name="username" placeholder="Choose a username" id="username" autofocus required>
+                    <div class="tooltip" id="username-tooltip"><span class="dot">!</span>Username is required to sign up</div>
+                </label>
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
+                <label for="password-input">
+                  <span>Password</span>
+                  <input type="password" id="password-input" class="form-control" placeholder="New password" name="password" maxlength="50" required>
+                  <div class="tooltip" id="password-1-tooltip"></div>
+                </label>
             </div>
             <div class="form-group">
-                <label>Verify Password</label>
-                <input type="password" class="form-control" id="verify-password">
+                <label for="password-input-2">
+                  <span>Verify Password</span>
+                  <input type="password" id="password-input-2" class="form-control" placeholder="Repeat password" maxlength="50" required>
+                  <div class="tooltip" id="password-2-tooltip"></div>
+                </label>
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+            <button type="submit" id="signup-submit" class="btn btn-warning btn-lg">Signup</button>
         </form>
 
         <hr>
@@ -58,6 +66,5 @@
     </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
     <script type="text/javascript" src="/public/js/signup.js" ></script>
 </html>
