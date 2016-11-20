@@ -1,6 +1,6 @@
 var modal = $('#myModal');
-var appURL = 'https://still-oasis-41820.herokuapp.com/';
-			
+var appURL = 'http://localhost:8080/';
+
 $('document').ready(function() {
 	getPolls();
 });
@@ -16,13 +16,13 @@ $('.grid').on('click', 'input[type="radio"]', function() {
 
 $('.grid').on('click', 'input[type="submit"]', function(e) {
     e.preventDefault();
-    
+
     var form = $(e.currentTarget).parent();
     var formID = form.attr('id');
-   
-    
+
+
     var selectedOption = $('input[name=option]:checked', "#" + formID).val();
-    
+
     $.ajax({
     	url: appURL + "polls/" + formID,
     	type: 'post',
@@ -48,7 +48,7 @@ $('.grid').on('click', 'input[type="submit"]', function(e) {
     				} else {
     					optionPercentPadding = 0;
     				}
-    				
+
 					if (selectedOption === optionText) {
 					    html += "<span class='option-bar user-option' style='width:" + optionPercent + ";' ><span class='option-info'><span class='option-percent' style='padding-left: " + optionPercentPadding + "px;' >" + optionPercent + "</span>" + optionText + "</span><i class='fa fa-check-circle-o' aria-hidden='true'></i>" + "</span>";
 					} else {
@@ -101,18 +101,18 @@ function formatDate(date) {
 	var dateEls = date.split("-");
 	var month = monthNumsToStrs[dateEls[1]];
 	var day = parseInt(dateEls[2], 10);
-	
+
 	return month + " " + day;
 }
 
 function getPolls() {
 	var category = $('#select-category').val();
     var sortType = $('#select-sort').val();
-    
+
 	$.ajax({
 	  	url: appURL + "api",
 	  	dataType: 'json',
-	    data: { 
+	    data: {
 	        "category": category,
 	        "sortType": sortType
 	    },
@@ -165,12 +165,12 @@ function getPolls() {
 	    		html += "</form></div>";
 	    	});
 	    	$('.grid').html(html);
-	    	
+
 	    	$('input[type="submit"]').prop("disabled", true);
-	    	
+
 	    	var msnry = new Masonry( '.grid', {
 			  columnWidth: 350,
-			  isFitWidth: true, 
+			  isFitWidth: true,
 			  gutter: 20,
 			  itemSelector: '.grid-item'
 			});

@@ -1,6 +1,6 @@
 var modal = $('#myModal');
-var appURL = 'https://still-oasis-41820.herokuapp.com/';
-			
+var appURL = 'http://localhost:8080/';
+
 $('document').ready(function() {
 	getPoll();
 	getChart();
@@ -17,12 +17,12 @@ $('.grid').on('click', 'input[type="radio"]', function() {
 
 $('.grid').on('click', 'input[type="submit"]', function(e) {
     e.preventDefault();
-    
+
     var form = $(e.currentTarget).parent();
     var formID = form.attr('id');
-   
+
     var selectedOption = $('input[name=option]:checked', "#" + formID).val();
-    
+
     $.ajax({
     	url: appURL + "polls/" + formID,
     	type: 'post',
@@ -49,7 +49,7 @@ $('.grid').on('click', 'input[type="submit"]', function(e) {
     				} else {
     					optionPercentPadding = 0;
     				}
-    				
+
 					if (selectedOption === optionText) {
 						var chartData = $('#myDoughnutChart').attr("chart-data").split(",").map(function(item) {
                           return parseInt(item, 10);
@@ -101,20 +101,20 @@ function formatDate(date) {
 	var dateEls = date.split("-");
 	var month = monthNumsToStrs[dateEls[1]];
 	var day = parseInt(dateEls[2], 10);
-	
+
 	return month + " " + day;
 }
 
 function getChart() {
 	var ctx = $("#myDoughnutChart");
-    
+
     var optionVotes = ctx.get(0).getAttribute("chart-data").split(",").map(function(item) {
                           return parseInt(item, 10);
                       });
-    var optionLabels = ctx.get(0).getAttribute("chart-labels").split(",").map(function(ol) { 
+    var optionLabels = ctx.get(0).getAttribute("chart-labels").split(",").map(function(ol) {
 					      return ol.replace(/&#44;/g, ',');
 					  });
-    
+
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -144,7 +144,7 @@ function getChart() {
 
 function getPoll() {
 	var pollID = $('.grid').attr('id');
-    
+
 	$.ajax({
 	  	url: appURL + "api/" + pollID,
 	  	dataType: 'json',
@@ -194,14 +194,14 @@ function getPoll() {
     		html += "<span class='total-votes'>&bull;</span>";
     		html += "<span class='total-votes'>" + displayCategory[poll.category] + "</span>";
     		html += "</form></div>";
-    		
+
 	    	$('.grid').prepend(html);
-	    	
+
 	    	$('input[type="submit"]').prop("disabled", true);
-	    	
+
 	    	var msnry = new Masonry( '.grid', {
 			  columnWidth: 350,
-			  isFitWidth: true, 
+			  isFitWidth: true,
 			  gutter: 20,
 			  itemSelector: '.grid-item'
 			});

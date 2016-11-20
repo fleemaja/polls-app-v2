@@ -417,6 +417,10 @@ label {
 	width: 100%;
 }
 
+#newpoll-submit {
+	margin-bottom: 20px;
+}
+
 @media (max-width: 800px) {
     .navbar-header {
         float: left;
