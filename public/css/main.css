@@ -1,17 +1,6 @@
 body {
 	font-family: 'Helvetica', sans-serif;
 	background: #f5f8fa;
-	margin-top: 80px;
-}
-
-li:not(.poll-items):not(#github-login) {
-	margin-right: 20px;
-	margin-top: 10px;
-}
-
-#github-login {
-  margin-right: 40px;
-	margin-top: 10px;
 }
 
 input[type="checkbox"] {
@@ -23,17 +12,9 @@ input[type="password"] {
 	height: 40px;
 }
 
-.navbar-nav>li>a {
-  padding: 8px !important;
-}
-
 .fa-signal,
 .fa-user {
   color: #f0ad4e;
-}
-
-ul {
-	margin-top: 50px;
 }
 
 .poll-items {
@@ -56,14 +37,26 @@ ul {
 }
 
 .navbar-brand {
-	margin-bottom: 10px;
-	margin-left: 20px;
+  padding-top: 10px;
+	padding-bottom: 7px;
+	margin: 0;
 	font-size: 32px;
 	font-weight: 900;
 }
 
+.menu {
+	font-size: 16px;
+}
+
+.menu:hover,
+.menu:active,
+.menu:focus {
+	background: #e9e9e9 !important;
+}
+
 .navbar-default {
   background: white;
+	padding: 5px 0px;
   font-family: 'Futura', 'Helvetica', sans-serif;
 }
 
@@ -419,42 +412,4 @@ label {
 
 #newpoll-submit {
 	margin-bottom: 20px;
-}
-
-@media (max-width: 800px) {
-    .navbar-header {
-        float: left;
-    }
-    .navbar-toggle {
-        display: none;
-    }
-    .navbar-collapse {
-        border-top: 1px solid transparent;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .navbar-collapse.collapse {
-        display: none!important;
-    }
-    .navbar-nav {
-        float: right!important;
-        margin: 10px 10px;
-    }
-    .navbar-nav>li {
-        float: right;
-    }
-    .navbar-nav>li>a {
-        padding-top: 0px;
-        padding-bottom: 0px;
-    }
-    .navbar-text {
-        float: right;
-        margin: 0px 0;
-    }
-    /* since 3.1.0 */
-    .navbar-collapse.collapse.in {
-        display: none!important;
-    }
-    .collapsing {
-        overflow: hidden!important;
-    }
 }
