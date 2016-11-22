@@ -149,7 +149,7 @@ function getPolls() {
 		    	json.forEach(function(poll) {
 		    		var pollTitle = $('<textarea />').html(poll.title).text();
 		    		html += "<div class='grid-item'>";
-		    		html += "<img src='' class='avatar " + poll.user + "' >";
+		    		html += "<img src='' class='avatar " + poll.user + "' alt='' >";
 		    		$.ajax({
 		    			url: 'http://localhost:8080/' + "settings/" + poll.user,
 		    			type: 'get',
