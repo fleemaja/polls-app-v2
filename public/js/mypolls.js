@@ -1,6 +1,6 @@
 var modal = $('#myModal');
 var warningModal = $('#warningModal');
-var appURL = 'http://localhost:8080/';
+var appURL = 'https://still-oasis-41820.herokuapp.com/';
 
 $('document').ready(function() {
 	getPolls();
@@ -151,7 +151,7 @@ function getPolls() {
 		    		html += "<div class='grid-item'>";
 		    		html += "<img src='' class='avatar " + poll.user + "' alt='' >";
 		    		$.ajax({
-		    			url: 'http://localhost:8080/' + "settings/" + poll.user,
+		    			url: 'https://still-oasis-41820.herokuapp.com/' + "settings/" + poll.user,
 		    			type: 'get',
 		    			success: function(json) {
 		    				$('.' + poll.user).attr('src', json['avatarURL']);

@@ -1,5 +1,5 @@
 var modal = $('#myModal');
-var appURL = 'http://localhost:8080/';
+var appURL = 'https://still-oasis-41820.herokuapp.com/';
 
 $('document').ready(function() {
 	getPoll();
